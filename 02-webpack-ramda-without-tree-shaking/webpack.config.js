@@ -1,6 +1,7 @@
 let path = require("path")
 let UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 let webpack = require("webpack")
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 let env = process.env.NODE_ENV
 let minifyJS = env == "production"
@@ -16,11 +17,7 @@ module.exports = {
     filename: "[name].js",
   },
   plugins: [
-    new webpack.DefinePlugin({
-     "process.env": {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
-    }),
+    new BundleAnalyzerPlugin(),
     ...(minifyJS ? [new UglifyJSPlugin()] : [])
   ],
 }
